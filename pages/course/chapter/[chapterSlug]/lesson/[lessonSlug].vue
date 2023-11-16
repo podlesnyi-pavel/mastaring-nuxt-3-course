@@ -22,12 +22,14 @@
     </div>
     <VideoPlayer v-if="lesson?.videoId" :video-id="lesson.videoId" />
     <p>{{ lesson?.text }}</p>
+    <LessonCompleteButton v-model="progress" />
   </div>
 </template>
 
 <script lang="ts" setup>
 const course = useCourse();
 const route = useRoute();
+const progress = ref();
 
 const chapter = computed(() => {
   return course.chapters.find(
