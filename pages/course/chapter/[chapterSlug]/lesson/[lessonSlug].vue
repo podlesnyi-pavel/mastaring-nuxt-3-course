@@ -40,4 +40,12 @@ const lesson = computed(() => {
     (lesson) => lesson.slug === route.params.lessonSlug
   );
 });
+
+const title = computed((): string => {
+  return `${lesson.value?.title} - ${course.title}` || 'Unknown Page';
+});
+
+useHead({
+  title,
+});
 </script>
