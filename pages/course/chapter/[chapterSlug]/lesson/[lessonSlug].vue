@@ -22,14 +22,16 @@
     </div>
     <VideoPlayer v-if="lesson?.videoId" :video-id="lesson.videoId" />
     <p>{{ lesson?.text }}</p>
-    <LessonCompleteButton v-model="progress" />
+    <LessonCompleteButton
+      :model-value="isLessonComplete"
+      @update:model-value="toggleComplete"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
 const course = useCourse();
 const route = useRoute();
-const progress = ref();
 
 const chapter = computed(() => {
   return course.chapters.find(
@@ -50,4 +52,39 @@ const title = computed((): string => {
 useHead({
   title,
 });
+
+const progress = useState('progress', () => {
+  return [] as Array<boolean[]>;
+});
+
+const isLessonComplete = computed(() => {
+  if (chapter.value && !progress.value[chapter.value.number - 1]) {
+    return false;
+  }
+
+  if (
+    chapter.value &&
+    lesson.value &&
+    !progress.value[chapter.value.number - 1][lesson.value.number - 1]
+  ) {
+    return false;
+  }
+
+  return (
+    chapter.value &&
+    lesson.value &&
+    progress.value[chapter.value.number - 1][lesson.value.number - 1]
+  );
+});
+
+const toggleComplete = () => {
+  if (chapter.value && lesson.value) {
+    if (!progress.value[chapter.value.number - 1]) {
+      progress.value[chapter.value.number - 1] = [];
+    }
+
+    progress.value[chapter.value.number - 1][lesson.value.number - 1] =
+      !isLessonComplete.value;
+  }
+};
 </script>
