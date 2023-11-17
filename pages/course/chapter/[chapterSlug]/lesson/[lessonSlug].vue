@@ -46,7 +46,9 @@ const lesson = computed(() => {
 });
 
 const title = computed((): string => {
-  return `${lesson.value?.title} - ${course.title}` || 'Unknown Page';
+  return (
+    (lesson.value && `${lesson.value?.title} - ${course.title}`) || course.title
+  );
 });
 
 useHead({
