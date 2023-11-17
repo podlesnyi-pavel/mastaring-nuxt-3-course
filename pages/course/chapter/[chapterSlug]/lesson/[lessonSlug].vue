@@ -53,9 +53,7 @@ useHead({
   title,
 });
 
-const progress = useState('progress', () => {
-  return [] as Array<boolean[]>;
-});
+const progress = useLocalStorage('progress', () => [] as Array<boolean[]>);
 
 const isLessonComplete = computed(() => {
   if (chapter.value && !progress.value[chapter.value.number - 1]) {
@@ -77,7 +75,7 @@ const isLessonComplete = computed(() => {
   );
 });
 
-const toggleComplete = () => {
+const toggleComplete = (): void => {
   if (chapter.value && lesson.value) {
     if (!progress.value[chapter.value.number - 1]) {
       progress.value[chapter.value.number - 1] = [];
