@@ -8,7 +8,7 @@ type Lesson = {
   videoId: number;
   text: string;
   sourceUrl?: string;
-  path?: string;
+  path: string;
 };
 
 type Chapter = {
@@ -24,8 +24,8 @@ type Course = {
 };
 
 export const useCourse = (): Course => {
-  const chapters: Chapter[] = courseData.chapters.map((chapter: Chapter) => {
-    const lessons: Lesson[] = chapter.lessons.map((lesson: Lesson) => {
+  const chapters: Chapter[] = courseData.chapters.map((chapter) => {
+    const lessons: Lesson[] = chapter.lessons.map((lesson) => {
       return {
         ...lesson,
         path: `/course/chapter/${chapter.slug}/lesson/${lesson.slug}`,
