@@ -63,8 +63,10 @@ useHead({
 });
 const { chapters } = useCourse();
 
-const resetError = (error) => {
-  console.log(error);
+const resetError = async (error) => {
+  await navigateTo(
+    '/course/chapter/1-chapter-1/lesson/1-introduction-to-typescript-with-vue-js-3'
+  );
   error.value = null;
 };
 </script>

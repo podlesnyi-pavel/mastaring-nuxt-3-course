@@ -24,7 +24,7 @@
     <p>{{ lesson?.text }}</p>
     <LessonCompleteButton
       :model-value="isLessonComplete"
-      @update:model-value="throw createError('Could not update');"
+      @update:model-value="toggleComplete"
     />
   </div>
 </template>
@@ -39,11 +39,25 @@ const chapter = computed(() => {
   );
 });
 
+if (!chapter.value) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Chapter not found',
+  });
+}
+
 const lesson = computed(() => {
   return chapter.value?.lessons.find(
     (lesson) => lesson.slug === route.params.lessonSlug
   );
 });
+
+if (!lesson.value) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Lesson not found',
+  });
+}
 
 const title = computed((): string => {
   return `${lesson.value?.title} - ${course.title}`;
