@@ -60,10 +60,11 @@
 </template>
 
 <script lang="ts" setup>
-useHead({
-  title: 'Course: Mastering Nuxt 3',
-});
 const { chapters, title } = useCourse();
+
+useHead({
+  title,
+});
 
 const resetError = async (error) => {
   await navigateTo(
